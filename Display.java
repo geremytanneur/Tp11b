@@ -83,10 +83,32 @@ public class Display {
     }
   }
 
+  public static int[][] egaliser(int[][] img) {
+    int[][] egalisee = new int[img.length][img[0].length];
+    int[] intensites = new int[256];
+    for (int i = 0; i < intensites.length; i++) {
+      for (int j = 0; j < img.length; j++) {
+        for (int j2 = 0; j2 < img[j].length; j2++) {
+          if (img[j][j2] <= i) {
+            intensites[i]++;
+          }
+        }
+      }
+    }
+    for (int i = 0; i < img.length; i++) {
+      for (int j = 0; j < img[i].length; j++) {
+        egalisee[i][j] = (intensites[img[i][j]]*255)/(img.length*img[i].length);
+      }
+    }
+    return egalisee;
+  }
+
   public static void main(String[] args) throws IOException {
     int[][] img = getGray("icon.gif");
-    saveGray(bords(img), "test.png");
     drawASCII(img);
+    int[][] img2 = getGray("overexposed.jpg");
+    saveGray(img2, "Aegaliser.jpg");
+    saveGray(egaliser(img2), "egalisee.jpg");
   }
 
 
