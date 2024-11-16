@@ -103,12 +103,39 @@ public class Display {
     return egalisee;
   }
 
+  public static int[][] melange(int[][] img) {
+    int[][] melangee = new int[img.length][img[0].length];
+    for (int i = 0; i < img.length/2; i++) {
+      for (int j = 0; j < img[i].length/2; j++) {
+        if (!(img.length % 2 != 0 && i * 2 == img.length - 1 || img[i].length % 2 != 0 && j * 2 == img[i].length - 1)) {
+          melangee[2*i][2*j] = img[2*i+1][2*j];
+          melangee[2*i+1][2*j] = img[2*i+1][2*j+1];
+          melangee[2*i+1][2*j+1] = img[2*i][2*j+1];
+          melangee[2*i][2*j+1] = img[2*i][2*j];
+        }
+      }
+    }
+    return melangee;
+  }
+
+  public static int[][] compress(int[][] img) {
+    int[][] compressee = new int[img.length/2][img[0].length/2];
+    for (int i = 0; i < img.length/2; i++) {
+      for (int j = 0; j < img[i].length/2; j++) {
+        compressee[i][j] = (img[2*i][2*j]+img[2*i+1][2*j]+img[2*i+1][2*j+1]+img[2*i][2*j+1])/4;
+      }
+    }
+    return compressee;
+  }
+
   public static void main(String[] args) throws IOException {
     int[][] img = getGray("icon.gif");
     drawASCII(img);
     int[][] img2 = getGray("overexposed.jpg");
     saveGray(img2, "Aegaliser.jpg");
     saveGray(egaliser(img2), "egalisee.jpg");
+    saveGray(melange(img), "melangee.jpg");
+    saveGray(compress(compress(compress(img2))), "compressee.jpg");
   }
 
 
